@@ -1,0 +1,15 @@
+{
+  "total_frames_processed": 90,
+  "game_status": {
+    "state": "detecting",
+    "level": "EASY",
+    "goal": "Stack any 2 cubes",
+    "hold_progress": 0.05,
+    "score": 0.0,
+    "stacks_completed": 0,
+    "time_elapsed_frames": 178,
+    "cubes_detected": 4,
+    "sequence_completions": {}
+  },
+  "events": []
+}
