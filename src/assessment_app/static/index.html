@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assessment Vision - Cube Stacking</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 0; background: #111; color: #eee; }
+  main { max-width: 1000px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 1.3rem; margin: 0 0 12px; }
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+  button, select { font-size: 1rem; padding: 6px 12px; border-radius: 6px; border: 1px solid #555; background: #222; color: #eee; cursor: pointer; }
+  button:disabled { opacity: .5; cursor: default; }
+  button[aria-pressed="true"] { background: #1f6f43; border-color: #2e9e60; }
+  #record[aria-pressed="true"] { background: #7a1f1f; border-color: #c53030; }
+  #view { width: 100%; background: #000; border-radius: 8px; aspect-ratio: 16 / 9; object-fit: contain; display: block; }
+  #status { margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+  .tile { background: #1c1c1c; border-radius: 6px; padding: 8px 10px; }
+  .tile b { display: block; font-size: .75rem; color: #999; font-weight: normal; }
+  #msg { margin-top: 8px; color: #f99; min-height: 1.2em; }
+  .muted { color: #888; font-size: .85rem; }
+  #analysis { margin-top: 20px; border-top: 1px solid #2a2a2a; padding-top: 16px; }
+  #analysis h2 { font-size: 1.1rem; margin: 0; }
+  #analysis h3 { font-size: .95rem; margin: 0 0 6px; color: #ccc; font-weight: 600; }
+  .an-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .an-head button, .an-head select { font-size: .85rem; padding: 4px 10px; }
+  #an-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-bottom: 12px; }
+  #an-cards .tile { font-size: 1.15rem; }
+  .an-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 12px; }
+  .card { background: #181818; border: 1px solid #262626; border-radius: 8px; padding: 12px; min-width: 0; }
+  .card.wide { grid-column: 1 / -1; }
+  .card p.muted { margin: 0 0 6px; font-size: .8rem; }
+  table.pairs { width: 100%; border-collapse: collapse; font-size: .85rem; margin-top: 6px; }
+  table.pairs th { color: #8a8a8a; font-weight: normal; text-align: right; padding: 3px 6px; border-bottom: 1px solid #2c2c2c; }
+  table.pairs td { text-align: right; padding: 3px 6px; border-bottom: 1px solid #222; }
+  table.pairs th:first-child, table.pairs td:first-child { text-align: left; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Cube Stacking Assessment</h1>
+  <div class="controls">
+    <button id="camera">Enable camera</button>
+    <select id="device" hidden title="Camera"></select>
+    <label>Game
+      <select id="game">
+        <option value="simple">Simple stacking</option>
+        <option value="random">Random stacking</option>
+        <option value="screwing">Screwing</option>
+      </select>
+    </label>
+    <label>Difficulty
+      <select id="difficulty">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+        <option value="expert">Expert</option>
+      </select>
+    </label>
+    <button id="hands" aria-pressed="false">Hand tracking: off</button>
+    <select id="tracker" title="Hand model">
+      <option value="hands">Hand model</option>
+      <option value="holistic">Holistic (needs body in view)</option>
+    </select>
+    <button id="pairs" aria-pressed="false" disabled title="Only moves made with the required thumb+finger pair count">Finger pairs: off</button>
+    <button id="nextPair" disabled>Next pair</button>
+    <button id="start" disabled>Start game</button>
+    <button id="reset" disabled>Reset</button>
+    <button id="record" disabled title="Download a video of the session when you stop">● Record</button>
+    <select id="recSource" title="What to record">
+      <option value="view">Annotated view</option>
+      <option value="tab">Whole tab (with analysis)</option>
+    </select>
+    <span id="fps" class="muted"></span>
+  </div>
+  <img id="view" alt="Annotated camera view">
+  <div id="status"></div>
+  <div id="msg"></div>
+  <section id="analysis" hidden>
+    <div class="an-head">
+      <h2 id="an-title">Session analysis</h2>
+      <span><button id="an-export">Export runs</button> <button id="an-clear">Clear history</button></span>
+    </div>
+    <div id="an-cards"></div>
+    <div class="an-grid">
+      <div class="card" id="an-rounds-card"><h3>Rounds</h3><div id="an-rounds"></div></div>
+      <div class="card" id="an-steps-card"><h3>Step time by tower position</h3><p class="muted">S = place, U = remove · one dot per round · line = median</p><div id="an-steps"></div></div>
+      <div class="card"><h3>Move phases</h3><p class="muted">Steps where the hand was seen in at least 60% of frames</p><div id="an-phases"></div></div>
+      <div class="card"><h3>Finger pairs</h3><div id="an-pairs"></div></div>
+      <div class="card wide">
+        <div class="an-head"><h3>Progression</h3><select id="an-metric" title="Metric"></select></div>
+        <p class="muted" id="an-history"></p>
+        <div id="an-progress"></div>
+      </div>
+    </div>
+  </section>
+  <p class="muted">Frames are sent to the server for processing and are not stored. Game results are kept only in this browser.</p>
+  <video id="cam" playsinline muted hidden></video>
+  <canvas id="grab" hidden></canvas>
+</main>
+<script src="/analysis.js"></script>
+<script>
+const SEND_HEIGHT = 540;
+const $ = (id) => document.getElementById(id);
+const video = $("cam"), canvas = $("grab"), ctx = canvas.getContext("2d");
+let ws = null, waiting = false, frames = 0, lastFpsAt = performance.now(), lastUrl = null;
+let sentAt = 0, rttMs = 0, serverMs = 0, timings = {}, handsOn = false, pairsOn = false;
+const VIRTUAL_CAMERA = /virtual|obs|snap camera|xsplit|droidcam|manycam/i;
+
+function showError(text) { $("msg").textContent = text || ""; }
+
+function renderStatus(s) {
+  const tiles = [
+    ["Goal", s.goal], ["State", s.state], ["Level", s.level],
+    ["Cubes", s.cubes_detected],
+    [s.mode === "random" ? "Rounds completed" : "Stacks completed", s.stacks_completed],
+    ["Hold", Math.round((s.hold_progress || 0) * 100) + "%"], ["Score", Math.round(s.score || 0)],
+  ];
+  if (s.mode === "random") tiles.push(["Round", `${s.round}/${s.rounds}`]);
+  if (s.mode === "screwing") {
+    tiles.push(["Depth", s.depth == null ? "-" : Math.round(s.depth * 100) + "%"]);
+    tiles.push(["Target", s.target_depth == null ? "-" : Math.round(s.target_depth * 100) + "%"]);
+    tiles.push(["Turns", s.turns == null ? "-" : Number(s.turns).toFixed(1)]);
+    tiles.push(["Phase", s.phase || "-"]);
+  }
+  if (s.required_pair) tiles.push(["Required pair", s.required_pair], ["Detected grip", s.grip || "-"]);
+  if (s.feedback) tiles.push(["Hint", s.feedback]);
+  $("status").replaceChildren(...tiles.map(([label, value]) => {
+    const div = document.createElement("div");
+    div.className = "tile";
+    const b = document.createElement("b");
+    b.textContent = label;
+    div.append(b, document.createTextNode(value ?? "-"));
+    return div;
+  }));
+}
+
+function sendFrame() {
+  if (!ws || ws.readyState !== WebSocket.OPEN || waiting || !video.videoWidth) return;
+  canvas.height = SEND_HEIGHT;
+  canvas.width = Math.round(video.videoWidth * SEND_HEIGHT / video.videoHeight);
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  waiting = true;
+  sentAt = performance.now();
+  // 8-byte little-endian capture time lets the server time events by when they happened, not when processed.
+  const header = new DataView(new ArrayBuffer(8));
+  header.setFloat64(0, sentAt, true);
+  canvas.toBlob((blob) => {
+    if (blob && ws.readyState === WebSocket.OPEN) ws.send(new Blob([header.buffer, blob])); else waiting = false;
+  }, "image/jpeg", 0.8);
+}
+
+function connect() {
+  const proto = location.protocol === "https:" ? "wss" : "ws";
+  const pose = encodeURIComponent(handsOn ? $("tracker").value : "off");
+  const socket = new WebSocket(`${proto}://${location.host}/ws?pose=${pose}`);
+  ws = socket;
+  waiting = false;
+  timings = {};
+  socket.binaryType = "blob";
+  socket.onopen = () => {
+    if (ws !== socket) return;
+    $("start").disabled = $("reset").disabled = false;
+    startGame();
+    sendFingerRule();
+    sendFrame();
+  };
+  socket.onmessage = (event) => {
+    if (ws !== socket) return;
+    if (typeof event.data === "string") {
+      const msg = JSON.parse(event.data);
+      if (msg.type === "summary") Analysis.update(msg.record, msg.final);
+      else if (msg.type === "status") {
+        renderStatus(msg.status);
+        serverMs = msg.server_ms;
+        timings = msg.timings || {};
+      }
+      else if (msg.type === "error") {
+        showError(msg.message);
+        waiting = false;
+        setTimeout(sendFrame, 200);
+      }
+      return;
+    }
+    if (rec && rec.source === "view") drawRecordingFrame(event.data);
+    if (lastUrl) URL.revokeObjectURL(lastUrl);
+    lastUrl = URL.createObjectURL(event.data);
+    $("view").src = lastUrl;
+    waiting = false;
+    frames++;
+    const now = performance.now();
+    rttMs = now - sentAt;
+    if (now - lastFpsAt > 1000) {
+      const fps = (frames * 1000 / (now - lastFpsAt)).toFixed(1);
+      const parts = Object.entries(timings).map(([name, ms]) => `${name} ${Math.round(ms)}`).join(" · ");
+      $("fps").textContent = `${fps} fps · round trip ${Math.round(rttMs)} ms · server ${Math.round(serverMs)} ms (${parts})`;
+      frames = 0;
+      lastFpsAt = now;
+    }
+    requestAnimationFrame(sendFrame);
+  };
+  socket.onclose = () => {
+    if (ws !== socket) return;
+    $("start").disabled = $("reset").disabled = true;
+    if (!$("msg").textContent) showError("Disconnected from server. Reload the page to reconnect.");
+  };
+}
+
+function reconnect() {
+  if (!ws) return;
+  const old = ws;
+  showError("");
+  $("fps").textContent = "loading models...";
+  connect();
+  old.close();
+}
+
+$("hands").onclick = () => {
+  handsOn = !handsOn;
+  $("hands").setAttribute("aria-pressed", String(handsOn));
+  $("hands").textContent = `Hand tracking: ${handsOn ? "on" : "off"}`;
+  updatePairButtons();
+  reconnect();
+};
+
+function updatePairButtons() {
+  $("pairs").disabled = !handsOn;
+  $("nextPair").disabled = !(handsOn && pairsOn);
+  $("pairs").setAttribute("aria-pressed", String(handsOn && pairsOn));
+  $("pairs").textContent = `Finger pairs: ${handsOn && pairsOn ? "on" : "off"}`;
+}
+
+function sendFingerRule() {
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify({ type: "finger_rule", enabled: handsOn && pairsOn }));
+  }
+}
+
+$("pairs").onclick = () => {
+  pairsOn = !pairsOn;
+  updatePairButtons();
+  sendFingerRule();
+};
+$("nextPair").onclick = () => ws && ws.readyState === WebSocket.OPEN && ws.send(JSON.stringify({ type: "next_pair" }));
+$("game").onchange = () => startGame();
+$("tracker").onchange = () => { if (handsOn) reconnect(); };
+
+function startGame() {
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify({ type: "start", difficulty: $("difficulty").value, game: $("game").value }));
+    showError("");
+  }
+}
+
+async function openCamera(deviceId) {
+  if (video.srcObject) video.srcObject.getTracks().forEach((track) => track.stop());
+  const video_constraints = { width: { ideal: 1280 }, height: { ideal: 720 } };
+  if (deviceId) video_constraints.deviceId = { exact: deviceId };
+  video.srcObject = await navigator.mediaDevices.getUserMedia({ video: video_constraints, audio: false });
+  await video.play();
+  return video.srcObject.getVideoTracks()[0].getSettings().deviceId;
+}
+
+// Device labels are only visible after permission is granted, so list cameras after the first open.
+async function fillDevices(activeId) {
+  const cameras = (await navigator.mediaDevices.enumerateDevices()).filter((d) => d.kind === "videoinput");
+  $("device").replaceChildren(...cameras.map((d, i) => new Option(d.label || `Camera ${i + 1}`, d.deviceId)));
+  $("device").value = activeId;
+  $("device").hidden = cameras.length < 2;
+  return cameras;
+}
+
+$("camera").onclick = async () => {
+  try {
+    let activeId = await openCamera(localStorage.getItem("cameraId")).catch(() => {
+      localStorage.removeItem("cameraId");
+      return openCamera(null);
+    });
+    const cameras = await fillDevices(activeId);
+    const active = cameras.find((d) => d.deviceId === activeId);
+    const real = cameras.find((d) => !VIRTUAL_CAMERA.test(d.label));
+    if (!localStorage.getItem("cameraId") && active && VIRTUAL_CAMERA.test(active.label) && real) {
+      activeId = await openCamera(real.deviceId);
+      $("device").value = activeId;
+    }
+    $("camera").disabled = true;
+    $("record").disabled = typeof MediaRecorder === "undefined";
+    connect();
+  } catch (err) {
+    localStorage.removeItem("cameraId");
+    showError(`Camera access failed: ${err.message}. The page must be served over HTTPS or localhost.`);
+  }
+};
+
+$("device").onchange = async () => {
+  try {
+    await openCamera($("device").value);
+    localStorage.setItem("cameraId", $("device").value);
+    showError("");
+  } catch (err) {
+    showError(`Could not switch camera: ${err.message}`);
+  }
+};
+$("start").onclick = startGame;
+Analysis.init();
+
+// Recording happens entirely in the browser; the file is downloaded when recording stops.
+let rec = null;
+
+function recordingMime() {
+  for (const type of ["video/mp4;codecs=avc1", "video/webm;codecs=vp9", "video/webm"]) {
+    if (MediaRecorder.isTypeSupported(type)) return type;
+  }
+  return "";
+}
+
+async function drawRecordingFrame(blob) {
+  const bitmap = await createImageBitmap(blob);
+  if (rec && rec.ctx) rec.ctx.drawImage(bitmap, 0, 0, rec.canvas.width, rec.canvas.height);
+  bitmap.close();
+}
+
+async function recordingStream(source) {
+  if (source === "tab") {
+    return navigator.mediaDevices.getDisplayMedia({
+      video: { frameRate: 30 }, audio: false, preferCurrentTab: true, selfBrowserSurface: "include",
+    });
+  }
+  const canvas = document.createElement("canvas");
+  canvas.width = $("view").naturalWidth || 960;
+  canvas.height = $("view").naturalHeight || 540;
+  const ctx = canvas.getContext("2d");
+  if ($("view").naturalWidth) ctx.drawImage($("view"), 0, 0, canvas.width, canvas.height);
+  return { stream: canvas.captureStream(30), canvas, ctx };
+}
+
+async function startRecording() {
+  const source = $("recSource").value;
+  let target;
+  try {
+    target = await recordingStream(source);
+  } catch (err) {
+    showError(`Recording not started: ${err.message}`);
+    return;
+  }
+  const stream = target instanceof MediaStream ? target : target.stream;
+  const mimeType = recordingMime();
+  const recorder = new MediaRecorder(stream, mimeType ? { mimeType, videoBitsPerSecond: 5_000_000 } : {});
+  const chunks = [];
+  recorder.ondataavailable = (event) => { if (event.data.size) chunks.push(event.data); };
+  recorder.onstop = () => {
+    stream.getTracks().forEach((track) => track.stop());
+    const type = recorder.mimeType || "video/webm";
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(new Blob(chunks, { type }));
+    link.download = `assessment-${$("game").value}-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-")}.${type.includes("mp4") ? "mp4" : "webm"}`;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(link.href), 10000);
+  };
+  // Stopping the share from the browser's own bar ends the recording too.
+  stream.getVideoTracks()[0].onended = () => { if (rec && rec.recorder === recorder) stopRecording(); };
+  recorder.start(1000);
+  rec = { recorder, source, started: performance.now(), canvas: target.canvas, ctx: target.ctx };
+  rec.timer = setInterval(updateRecordButton, 500);
+  $("recSource").disabled = true;
+  updateRecordButton();
+}
+
+function stopRecording() {
+  if (!rec) return;
+  clearInterval(rec.timer);
+  if (rec.recorder.state !== "inactive") rec.recorder.stop();
+  rec = null;
+  $("recSource").disabled = false;
+  updateRecordButton();
+}
+
+function updateRecordButton() {
+  const button = $("record");
+  button.setAttribute("aria-pressed", String(Boolean(rec)));
+  if (!rec) {
+    button.textContent = "● Record";
+    return;
+  }
+  const seconds = Math.floor((performance.now() - rec.started) / 1000);
+  button.textContent = `■ Stop ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+}
+
+$("record").onclick = () => (rec ? stopRecording() : startRecording());
+$("reset").onclick = () => ws && ws.readyState === WebSocket.OPEN && ws.send(JSON.stringify({ type: "reset" }));
+</script>
+</body>
+</html>

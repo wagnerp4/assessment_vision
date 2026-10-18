@@ -1,0 +1,15 @@
+.git
+.venv
+venv
+**/__pycache__
+.pytest_cache
+.coverage
+htmlcov
+dev_frames
+models
+docs
+scripts
+tests
+*.mp4
+*.avi
+game_results.json

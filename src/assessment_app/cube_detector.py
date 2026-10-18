@@ -1,10 +1,13 @@
 """Cube detection: per-color HSV segmentation + shape filtering + tracked label voting."""
-import cv2
-import numpy as np
+
 from collections import Counter, deque
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
+
+import cv2
+import numpy as np
 from scipy.optimize import linear_sum_assignment
+
 from .config import CubeConfig
 
 
@@ -35,17 +38,17 @@ class Cube:
 
 # OpenCV HSV: H 0-179, S/V 0-255. Red wraps, so it gets two hue intervals.
 COLOR_RULES = {
-    'red':    {'h': [(0, 8), (160, 179)], 's_min': 70, 'v_min': 60},
-    'yellow': {'h': [(14, 36)],           's_min': 55, 'v_min': 90},
-    'green':  {'h': [(40, 85)],           's_min': 50, 'v_min': 35},
-    'blue':   {'h': [(92, 128)],          's_min': 85, 'v_min': 18},
+    "red": {"h": [(0, 8), (160, 179)], "s_min": 70, "v_min": 60},
+    "yellow": {"h": [(14, 36)], "s_min": 55, "v_min": 90},
+    "green": {"h": [(40, 85)], "s_min": 50, "v_min": 35},
+    "blue": {"h": [(92, 128)], "s_min": 85, "v_min": 18},
 }
 
 
 class CubeDetector:
     def __init__(self, config: CubeConfig = None):
         self.config = config or CubeConfig()
-        self.rules = getattr(self.config, 'COLOR_RULES', COLOR_RULES)
+        self.rules = getattr(self.config, "COLOR_RULES", COLOR_RULES)
         self.min_area = self.config.MIN_CONTOUR_AREA
         self.max_area = self.config.MAX_CONTOUR_AREA
         self.min_solidity = 0.80
@@ -55,16 +58,19 @@ class CubeDetector:
         self.kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))
         self.tracker = CubeTracker()
         self.last_masks: Dict[str, np.ndarray] = {}
-        from .stacking_analyzer import StackingAnalyzer  # lazy: stacking_analyzer imports Cube from here
+        from .stacking_analyzer import (
+            StackingAnalyzer,  # lazy: stacking_analyzer imports Cube from here
+        )
+
         self._stack_check = StackingAnalyzer(self.config)
 
     def color_mask(self, hsv: np.ndarray, color: str) -> np.ndarray:
         rule = self.rules[color]
         h, s, v = hsv[..., 0], hsv[..., 1], hsv[..., 2]
         hue_ok = np.zeros(h.shape, dtype=bool)
-        for lo, hi in rule['h']:
+        for lo, hi in rule["h"]:
             hue_ok |= (h >= lo) & (h <= hi)
-        mask = (hue_ok & (s >= rule['s_min']) & (v >= rule['v_min'])).astype(np.uint8) * 255
+        mask = (hue_ok & (s >= rule["s_min"]) & (v >= rule["v_min"])).astype(np.uint8) * 255
         mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, self.kernel)
         mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, self.kernel, iterations=2)
         return mask
@@ -134,7 +140,9 @@ class CubeDetector:
         x1, y1 = min(shape[1], x + w + k), min(shape[0], y + h + k)
         blob = np.zeros((y1 - y0, x1 - x0), np.uint8)
         cv2.drawContours(blob, [contour - [x0, y0]], -1, 255, -1)
-        blob = cv2.morphologyEx(blob, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k)))
+        blob = cv2.morphologyEx(
+            blob, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))
+        )
         found, _ = cv2.findContours(blob, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         return [f + [x0, y0] for f in found]
 
@@ -193,8 +201,16 @@ class CubeDetector:
                     (x, y, w, h), area, quality = ok
                     if x <= 1 or y <= 1 or x + w >= hsv.shape[1] - 1 or y + h >= hsv.shape[0] - 1:
                         quality *= 0.5  # cut off by the image border: partial or background object
-                    cubes.append(Cube(color, (x, y, w, h), (x + w // 2, y + h // 2),
-                                      int(area), float(quality), frame_id))
+                    cubes.append(
+                        Cube(
+                            color,
+                            (x, y, w, h),
+                            (x + w // 2, y + h // 2),
+                            int(area),
+                            float(quality),
+                            frame_id,
+                        )
+                    )
         # All cubes are the same physical size, so blobs far off the median size are clutter.
         if len(cubes) >= 3:
             median = float(np.median([c.area for c in cubes]))
@@ -216,7 +232,10 @@ class CubeDetector:
             x, y, w, h = anchor.bbox
             if on_border(anchor.bbox):
                 continue
-            for y0, y1 in ((y + int(0.5 * h), y + int(1.9 * h)), (y - int(0.9 * h), y + int(0.5 * h))):
+            for y0, y1 in (
+                (y + int(0.5 * h), y + int(1.9 * h)),
+                (y - int(0.9 * h), y + int(0.5 * h)),
+            ):
                 x0, x1 = max(0, x + int(0.05 * w)), min(W, x + int(0.95 * w))
                 y0, y1 = max(0, y0), min(H, y1)
                 if x1 - x0 < 10 or y1 - y0 < 10:
@@ -224,14 +243,20 @@ class CubeDetector:
                 roi = hsv[y0:y1, x0:x1]
                 for color, rule in self.rules.items():
                     # Skip colors already present in this column (e.g. the edge of the real cube above).
-                    if any(c.color == color and x - 0.5 * w <= c.center[0] <= x + 1.5 * w
-                           and y - 2.5 * h <= c.center[1] <= y + 3 * h for c in cubes + found):
+                    if any(
+                        c.color == color
+                        and x - 0.5 * w <= c.center[0] <= x + 1.5 * w
+                        and y - 2.5 * h <= c.center[1] <= y + 3 * h
+                        for c in cubes + found
+                    ):
                         continue
-                    relaxed = dict(rule, s_min=int(rule['s_min'] * 0.5))
+                    relaxed = dict(rule, s_min=int(rule["s_min"] * 0.5))
                     h_ok = np.zeros(roi.shape[:2], bool)
-                    for lo, hi in relaxed['h']:
+                    for lo, hi in relaxed["h"]:
                         h_ok |= (roi[..., 0] >= lo) & (roi[..., 0] <= hi)
-                    m = (h_ok & (roi[..., 1] >= relaxed['s_min']) & (roi[..., 2] >= relaxed['v_min'])).astype(np.uint8) * 255
+                    m = (
+                        h_ok & (roi[..., 1] >= relaxed["s_min"]) & (roi[..., 2] >= relaxed["v_min"])
+                    ).astype(np.uint8) * 255
                     m = cv2.morphologyEx(m, cv2.MORPH_OPEN, self.kernel)
                     m = cv2.morphologyEx(m, cv2.MORPH_CLOSE, self.kernel, iterations=2)
                     cs, _ = cv2.findContours(m, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -244,10 +269,19 @@ class CubeDetector:
                     if area < 0.35 * anchor.area or bw < 0.6 * (x1 - x0):
                         continue
                     bx, by = bx + x0, by + y0
-                    cand = Cube(color, (bx, by, bw, bh), (bx + bw // 2, by + bh // 2), int(area), 0.6, frame_id)
+                    cand = Cube(
+                        color,
+                        (bx, by, bw, bh),
+                        (bx + bw // 2, by + bh // 2),
+                        int(area),
+                        0.6,
+                        frame_id,
+                    )
                     if on_border(cand.bbox):
                         continue
-                    lower, upper = (cand, anchor) if cand.center[1] > anchor.center[1] else (anchor, cand)
+                    lower, upper = (
+                        (cand, anchor) if cand.center[1] > anchor.center[1] else (anchor, cand)
+                    )
                     if not self._stack_check.analyze_alignment(lower, upper).is_aligned:
                         continue
                     found.append(cand)
@@ -283,8 +317,14 @@ def _iou(a, b) -> float:
 class CubeTracker:
     """IoU + centroid Hungarian matching; tracks need `min_hits` to show and survive `max_misses` gaps."""
 
-    def __init__(self, max_dist: float = 120, max_misses: int = 10, min_hits: int = 3,
-                 max_coast: int = 4, smooth: float = 0.5):
+    def __init__(
+        self,
+        max_dist: float = 120,
+        max_misses: int = 10,
+        min_hits: int = 3,
+        max_coast: int = 4,
+        smooth: float = 0.5,
+    ):
         self.max_dist = max_dist
         self.max_coast = max_coast
         self.max_misses = max_misses
@@ -302,7 +342,9 @@ class CubeTracker:
                     d = np.hypot(t.cube.center[0] - c.center[0], t.cube.center[1] - c.center[1])
                     if d > self.max_dist:
                         continue
-                    cost[i, j] = d * (1.0 - _iou(t.cube.bbox, c.bbox)) + (0 if t.label == c.color else 40)
+                    cost[i, j] = d * (1.0 - _iou(t.cube.bbox, c.bbox)) + (
+                        0 if t.label == c.color else 40
+                    )
             rows, cols = linear_sum_assignment(cost)
             for i, j in zip(rows, cols):
                 if cost[i, j] >= 1e6:

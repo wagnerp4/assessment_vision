@@ -26,9 +26,7 @@ class VisionPipeline(Generic[TaskOutputT]):
         backend: ModelBackend | Sequence[ModelBackend],
         task: VisionTask[TaskOutputT],
     ) -> None:
-        self.backends = (
-            tuple(backend) if isinstance(backend, RuntimeSequence) else (backend,)
-        )
+        self.backends = tuple(backend) if isinstance(backend, RuntimeSequence) else (backend,)
         if not self.backends:
             raise ValueError("At least one model backend is required.")
         self.task = task
@@ -56,9 +54,7 @@ class VisionPipeline(Generic[TaskOutputT]):
         if self._active_sample is None:
             raise RuntimeError("Call begin_sequence before processing frames.")
         observations: Sequence[ModelObservation] = tuple(
-            observation
-            for backend in self.backends
-            for observation in backend.predict(frame)
+            observation for backend in self.backends for observation in backend.predict(frame)
         )
         output = self.task.process(frame, observations)
         return PipelineFrame(self._active_sample, frame, tuple(observations), output)

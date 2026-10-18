@@ -4,11 +4,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Generic, Iterator, Mapping, Protocol, Sequence, TypeVar
+from typing import TYPE_CHECKING, Any, Generic, Iterator, Mapping, Protocol, Sequence, TypeVar
 
 import numpy as np
-
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .cube_detector import Cube
@@ -55,7 +53,7 @@ class Keypoint:
     name: str
     x: float
     y: float
-    confidence: float
+    confidence: float | None = None
 
 
 @dataclass(frozen=True)
@@ -101,6 +99,24 @@ class SceneGraphObservation:
 
 
 @dataclass(frozen=True)
+class FastenerObservation:
+    """Screw and nut found in one frame. Depth is the nut center's fraction from tip (0) to head (1)."""
+
+    sequence_id: str
+    frame_index: int
+    timestamp_ms: float
+    screw_tip: tuple[float, float] | None = None
+    screw_head: tuple[float, float] | None = None
+    screw_polygon: tuple[tuple[int, int], ...] = ()
+    nut_center: tuple[float, float] | None = None
+    nut_polygon: tuple[tuple[int, int], ...] = ()
+    nut_edges: tuple[tuple[tuple[int, int], tuple[int, int]], ...] = ()
+    nut_angle_deg: float | None = None
+    depth: float | None = None
+    nut_on_screw: bool = False
+
+
+@dataclass(frozen=True)
 class ActionEvent:
     """A timed, observable interaction; it does not imply a clinical interpretation."""
 
@@ -114,7 +130,7 @@ class ActionEvent:
     attributes: Mapping[str, Any] = field(default_factory=dict)
 
 
-ModelObservation = CubeDetections | PoseObservation | SceneGraphObservation
+ModelObservation = CubeDetections | PoseObservation | SceneGraphObservation | FastenerObservation
 TaskOutputT = TypeVar("TaskOutputT")
 
 

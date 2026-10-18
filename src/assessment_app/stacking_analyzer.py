@@ -1,23 +1,25 @@
-import numpy as np
-from typing import List, Tuple, Dict, Optional
-from dataclasses import dataclass, field
-from collections import defaultdict
-from .cube_detector import Cube
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Tuple
+
 from .config import CubeConfig
+from .cube_detector import Cube
+
 
 @dataclass
 class AlignmentResult:
     """Result of alignment check between two cubes"""
+
     is_aligned: bool
     alignment_type: str  # 'perfect', 'good', 'poor', 'none'
     horizontal_distance: int  # pixels between edges
-    vertical_distance: int    # pixels between edges
+    vertical_distance: int  # pixels between edges
     confidence: float  # 0-1
 
 
 @dataclass
 class StackingEvent:
     """Represents a stacking event"""
+
     cube_ids: List[int]
     cube_colors: List[str]
     timestamp_frame: int
@@ -41,17 +43,26 @@ class StackingAnalyzer:
         # Positive = visible gap between the cubes; negative = the upper cube hides part of the lower one.
         vertical_gap = y1 - (y2 + h2)
         if overlap_w <= 0:
-            return AlignmentResult(False, 'none', int(overlap_w), int(vertical_gap), 0.0)
+            return AlignmentResult(False, "none", int(overlap_w), int(vertical_gap), 0.0)
 
         overlap = overlap_w / max(1, min(w1, w2))
         ref_h = max(1, max(h1, h2))  # the lower cube may be partly hidden by the upper one
-        touching = -0.45 * ref_h <= vertical_gap <= max(self.config.VERTICAL_DISTANCE_THRESHOLD, 0.25 * ref_h)
+        touching = (
+            -0.45 * ref_h
+            <= vertical_gap
+            <= max(self.config.VERTICAL_DISTANCE_THRESHOLD, 0.25 * ref_h)
+        )
         if not touching or overlap < 0.5:
-            return AlignmentResult(False, 'poor' if touching else 'none', int(overlap_w), int(vertical_gap),
-                                   0.3 if touching else 0.0)
+            return AlignmentResult(
+                False,
+                "poor" if touching else "none",
+                int(overlap_w),
+                int(vertical_gap),
+                0.3 if touching else 0.0,
+            )
         if overlap >= self.config.VERTICAL_OVERLAP_THRESHOLD:
-            return AlignmentResult(True, 'perfect', int(overlap_w), int(vertical_gap), 0.95)
-        return AlignmentResult(True, 'good', int(overlap_w), int(vertical_gap), 0.6)
+            return AlignmentResult(True, "perfect", int(overlap_w), int(vertical_gap), 0.95)
+        return AlignmentResult(True, "good", int(overlap_w), int(vertical_gap), 0.6)
 
     def find_stacks(self, cubes: List[Cube]) -> List[List[Cube]]:
         """Return stacks of 2+ cubes, each ordered bottom -> top."""
@@ -96,7 +107,7 @@ class StackingAnalyzer:
         Returns (is_valid, sequence_string)
         """
         sequence = tuple(cube.color for cube in stack)
-        sequence_str = ' -> '.join(sequence)
+        sequence_str = " -> ".join(sequence)
 
         is_valid = sequence in self.config.VALID_STACK_SEQUENCES
 
@@ -112,7 +123,7 @@ class StackingAnalyzer:
         # Create sequence keys for current stacks
         current_sequences = {}
         for stack in stacks:
-            seq_key = '_'.join(str(c.cube_id) for c in stack)
+            seq_key = "_".join(str(c.cube_id) for c in stack)
             is_valid, seq_str = self.validate_stack_sequence(stack)
             current_sequences[seq_key] = (stack, is_valid, seq_str)
 
@@ -122,7 +133,7 @@ class StackingAnalyzer:
                 self.stacking_history[seq_key] = StackingEvent(
                     cube_ids=[c.cube_id for c in stack],
                     cube_colors=[c.color for c in stack],
-                    timestamp_frame=frame_id
+                    timestamp_frame=frame_id,
                 )
 
             event = self.stacking_history[seq_key]
@@ -136,8 +147,9 @@ class StackingAnalyzer:
                         confirmed_events.append(event)
 
         # Remove old stacking events
-        to_remove = [key for key, event in self.stacking_history.items()
-                    if key not in current_sequences]
+        to_remove = [
+            key for key, event in self.stacking_history.items() if key not in current_sequences
+        ]
         for key in to_remove:
             del self.stacking_history[key]
 
@@ -150,9 +162,9 @@ class StackingAnalyzer:
                 position = next(i for i, c in enumerate(stack) if c.cube_id == cube.cube_id)
                 is_valid, seq_str = self.validate_stack_sequence(stack)
                 return {
-                    'stack_position': position,
-                    'stack_height': len(stack),
-                    'is_valid_sequence': is_valid,
-                    'sequence': seq_str
+                    "stack_position": position,
+                    "stack_height": len(stack),
+                    "is_valid_sequence": is_valid,
+                    "sequence": seq_str,
                 }
         return None

@@ -1,0 +1,11 @@
+# Screw and nut detector dataset (YOLO format). See docs/models/fastener-detector.md.
+# Images:  datasets/fasteners/images/{train,val}/<session>_<frame>.jpg
+# Labels:  datasets/fasteners/labels/{train,val}/<session>_<frame>.txt  (class cx cy w h, normalized)
+path: .
+train: images/train
+val: images/val
+names:
+  0: screw
+  1: screw_head
+  2: screw_tip
+  3: nut

@@ -53,9 +53,23 @@ dev_frames/
 # uv
 .uv/
 
+# Optional model weights are downloaded locally and are not source assets.
+models/*.task
+
 # Compiled files
 *.pyc
 
 # Archives
 _archive/
 _old/
+
+# Session records and summary figures written by the app.
+runs/
+
+# Fastener detector data and weights stay local; only the dataset config is tracked.
+datasets/fasteners/*
+!datasets/fasteners/data.yaml
+models/*.onnx
+models/fastener_detector*.json
+# Pretrained YOLO start points downloaded by ultralytics.
+*.pt

@@ -5,8 +5,6 @@ __author__ = "Assessment App Contributors"
 
 from .app import AssessmentApp
 from .config import CubeConfig
-from .cube_detector import CubeDetector, Cube
-from .game_logic import GameEngine, GameDifficulty
 from .contracts import (
     ActionEvent,
     CubeDetections,
@@ -20,8 +18,10 @@ from .contracts import (
     SceneGraphObservation,
     VisionTask,
 )
+from .cube_detector import Cube, CubeDetector
 from .datasets import VideoDataset
-from .model_backends import HSVCubeBackend
+from .game_logic import GameDifficulty, GameEngine
+from .model_backends import HSVCubeBackend, MediaPipeHandBackend, MediaPipeHolisticBackend
 from .pipeline import VisionPipeline
 from .tasks import CubeStackingTask
 
@@ -45,6 +45,8 @@ __all__ = [
     "VisionTask",
     "VideoDataset",
     "HSVCubeBackend",
+    "MediaPipeHolisticBackend",
+    "MediaPipeHandBackend",
     "VisionPipeline",
     "CubeStackingTask",
 ]

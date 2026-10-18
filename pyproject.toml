@@ -17,6 +17,14 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+pose = ["mediapipe>=0.10.21,<0.11"]
+web = ["fastapi>=0.110", "uvicorn[standard]>=0.29"]
+analysis = ["matplotlib>=3.7"]
+# Faster CPU inference for the screw and nut detector; OpenCV DNN is the fallback.
+detector = ["onnxruntime>=1.17"]
+# Only for scripts/train_fastener_detector.py; the app runs the exported ONNX with OpenCV.
+# torch/torchvision are listed so uv takes them from the CUDA index below.
+train = ["ultralytics>=8.3", "torch>=2.4", "torchvision>=0.19"]
 dev = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
@@ -27,6 +35,17 @@ dev = [
 
 [project.scripts]
 assessment-app = "assessment_app.app:main"
+assessment-web = "assessment_app.web:main"
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cu130", marker = "sys_platform != 'darwin'" }]
+torchvision = [{ index = "pytorch-cu130", marker = "sys_platform != 'darwin'" }]
+
+[[tool.uv.index]]
+# CUDA 13.0 build for training on an NVIDIA GPU; it also runs on CPU-only machines.
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
 
 [tool.black]
 line-length = 100
@@ -35,6 +54,8 @@ target-version = ["py310"]
 [tool.ruff]
 line-length = 100
 target-version = "py310"
+
+[tool.ruff.lint]
 select = ["E", "F", "W", "I"]
 ignore = ["E501"]  # line too long (handled by black)
 

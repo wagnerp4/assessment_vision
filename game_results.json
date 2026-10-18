@@ -1,15 +1,1625 @@
 {
-  "total_frames_processed": 90,
+  "total_frames_processed": 1842,
   "game_status": {
+    "mode": "random",
     "state": "detecting",
-    "level": "EASY",
-    "goal": "Stack any 2 cubes",
-    "hold_progress": 0.05,
+    "level": "HARD",
+    "goal": "Round 3/4 STACK Y-R-B-G (bottom->top)",
+    "hold_progress": 0.0,
     "score": 0.0,
-    "stacks_completed": 0,
-    "time_elapsed_frames": 178,
+    "stacks_completed": 2,
+    "time_elapsed_frames": 1841,
     "cubes_detected": 4,
-    "sequence_completions": {}
+    "sequence_completions": {},
+    "target": [
+      "yellow",
+      "red",
+      "blue",
+      "green"
+    ],
+    "phase": "stack",
+    "round": 3,
+    "rounds": 4,
+    "height": 1,
+    "rejected_moves": 1,
+    "feedback": ""
   },
-  "events": []
+  "events": [
+    {
+      "timestamp": "2026-10-02T10:10:07.072588",
+      "event_type": "round_started",
+      "data": {
+        "round": 1,
+        "target": [
+          "yellow",
+          "blue",
+          "red",
+          "green"
+        ],
+        "frame": 0
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:12.839676",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 73,
+        "end_frame": 91,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:14.216028",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 17,
+        "end_frame": 105,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:14.216028",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 70,
+        "end_frame": 105,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:14.306095",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 71,
+        "end_frame": 106,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:16.557431",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 95,
+        "end_frame": 130,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:16.856463",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 114,
+        "end_frame": 134,
+        "grip": "thumb+pinky",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:17.569966",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 131,
+        "end_frame": 143,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:17.569966",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 118,
+        "end_frame": 143,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:22.059644",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 186,
+        "end_frame": 195,
+        "grip": "no pinch",
+        "required": "thumb+index",
+        "counted": false
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:25.634583",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 224,
+        "end_frame": 230,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:25.731094",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 226,
+        "end_frame": 231,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:26.591971",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 235,
+        "end_frame": 240,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:29.491698",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 238,
+        "end_frame": 269,
+        "grip": "thumb+middle",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:32.547647",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 293,
+        "end_frame": 299,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:35.351990",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 295,
+        "end_frame": 329,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:37.531391",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 332,
+        "end_frame": 353,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:37.829993",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 330,
+        "end_frame": 356,
+        "grip": "thumb+ring",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:38.531978",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 349,
+        "end_frame": 363,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:38.531978",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 350,
+        "end_frame": 363,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:39.197695",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 364,
+        "end_frame": 370,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:39.197695",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 354,
+        "end_frame": 370,
+        "grip": "thumb+middle",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:39.529982",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 364,
+        "end_frame": 374,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:40.071832",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 376,
+        "end_frame": 382,
+        "grip": "thumb+pinky",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:42.797498",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 403,
+        "end_frame": 412,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:42.797498",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 400,
+        "end_frame": 412,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:43.049964",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 394,
+        "end_frame": 414,
+        "grip": "thumb+pinky",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:43.446382",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 403,
+        "end_frame": 418,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:44.658387",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 424,
+        "end_frame": 430,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:45.051202",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 429,
+        "end_frame": 434,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:45.727236",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 423,
+        "end_frame": 441,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:47.030759",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 446,
+        "end_frame": 454,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:47.117520",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 442,
+        "end_frame": 455,
+        "grip": "thumb+pinky",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:47.117520",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 445,
+        "end_frame": 455,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:47.701602",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 457,
+        "end_frame": 462,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:50.327837",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 486,
+        "end_frame": 491,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:50.327837",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 486,
+        "end_frame": 491,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:50.413040",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 487,
+        "end_frame": 492,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:50.513101",
+      "event_type": "stack_completed",
+      "data": {
+        "round": 1,
+        "frame": 493,
+        "frames": 493
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:52.077416",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 504,
+        "end_frame": 510,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:53.712362",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 522,
+        "end_frame": 527,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:53.816504",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 523,
+        "end_frame": 528,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:56.010797",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 545,
+        "end_frame": 550,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:56.010797",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 545,
+        "end_frame": 550,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:56.120940",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 545,
+        "end_frame": 551,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:56.386575",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 548,
+        "end_frame": 554,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:56.950716",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 554,
+        "end_frame": 560,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:56.950716",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 554,
+        "end_frame": 560,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:57.060863",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 554,
+        "end_frame": 561,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:58.173467",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 566,
+        "end_frame": 572,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:58.613727",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 570,
+        "end_frame": 577,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:58.682390",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 569,
+        "end_frame": 578,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:59.149678",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 568,
+        "end_frame": 584,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:59.715944",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 586,
+        "end_frame": 591,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:10:59.800272",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 587,
+        "end_frame": 592,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:00.082348",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 589,
+        "end_frame": 595,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:00.377198",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 593,
+        "end_frame": 598,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:01.831057",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 603,
+        "end_frame": 610,
+        "grip": "thumb+middle",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:03.176410",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 601,
+        "end_frame": 622,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:03.176410",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 610,
+        "end_frame": 622,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:05.136428",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 595,
+        "end_frame": 641,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:05.136428",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 634,
+        "end_frame": 641,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:05.788834",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 635,
+        "end_frame": 648,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:07.006615",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 652,
+        "end_frame": 659,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:07.006615",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 652,
+        "end_frame": 659,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:07.440718",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 649,
+        "end_frame": 663,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:08.441278",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 668,
+        "end_frame": 673,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:08.441278",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 668,
+        "end_frame": 673,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:08.814484",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 672,
+        "end_frame": 677,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:11.012562",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 695,
+        "end_frame": 701,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:17.657491",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 778,
+        "end_frame": 783,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:19.666333",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 800,
+        "end_frame": 805,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:20.123220",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 788,
+        "end_frame": 811,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:20.301243",
+      "event_type": "cube_removed",
+      "data": {
+        "round": 1,
+        "color": "green",
+        "frame": 813
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:23.906571",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 850,
+        "end_frame": 855,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:23.906571",
+      "event_type": "cube_removed",
+      "data": {
+        "round": 1,
+        "color": "red",
+        "frame": 855
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:23.989060",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 838,
+        "end_frame": 856,
+        "grip": "thumb+middle",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:26.448269",
+      "event_type": "cube_removed",
+      "data": {
+        "round": 1,
+        "color": "blue",
+        "frame": 884
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:26.448269",
+      "event_type": "round_completed",
+      "data": {
+        "round": 1,
+        "frame": 884,
+        "frames": 884
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:26.448269",
+      "event_type": "round_started",
+      "data": {
+        "round": 2,
+        "target": [
+          "red",
+          "yellow",
+          "blue",
+          "green"
+        ],
+        "frame": 884
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:26.961512",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 869,
+        "end_frame": 891,
+        "grip": "thumb+middle",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:28.075151",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 857,
+        "end_frame": 906,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:36.562070",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 1009,
+        "end_frame": 1019,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:38.290486",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 938,
+        "end_frame": 1039,
+        "grip": "thumb+ring",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:38.290486",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 1013,
+        "end_frame": 1039,
+        "grip": "thumb+middle",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:39.891943",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 1016,
+        "end_frame": 1059,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:40.663767",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 1020,
+        "end_frame": 1068,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:44.045064",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 1070,
+        "end_frame": 1107,
+        "grip": "thumb+middle",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:46.180584",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 1124,
+        "end_frame": 1133,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:46.925816",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 1135,
+        "end_frame": 1141,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:47.596674",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 1127,
+        "end_frame": 1148,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:49.239154",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 1049,
+        "end_frame": 1167,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:50.483897",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 1149,
+        "end_frame": 1179,
+        "grip": "thumb+ring",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:50.483897",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 1167,
+        "end_frame": 1179,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:50.483897",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 1156,
+        "end_frame": 1179,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:56.224753",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 1233,
+        "end_frame": 1239,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:56.224753",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 1213,
+        "end_frame": 1239,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:58.216234",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 1256,
+        "end_frame": 1261,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:58.303451",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 1257,
+        "end_frame": 1262,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:11:59.594770",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 1260,
+        "end_frame": 1277,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:01.434730",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 1297,
+        "end_frame": 1302,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:02.221317",
+      "event_type": "stack_completed",
+      "data": {
+        "round": 2,
+        "frame": 1313,
+        "frames": 429
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:05.381552",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 1354,
+        "end_frame": 1359,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:06.766541",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 1371,
+        "end_frame": 1376,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:06.766541",
+      "event_type": "cube_removed",
+      "data": {
+        "round": 2,
+        "color": "green",
+        "frame": 1376
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:07.543103",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 1364,
+        "end_frame": 1385,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:10.402009",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 1386,
+        "end_frame": 1417,
+        "grip": "thumb+middle",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:11.565277",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 1404,
+        "end_frame": 1434,
+        "grip": "thumb+ring",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:15.825841",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 1479,
+        "end_frame": 1491,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:16.207960",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 1491,
+        "end_frame": 1496,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:16.432151",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 1494,
+        "end_frame": 1499,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:16.432151",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 1492,
+        "end_frame": 1499,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:22.388368",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 1526,
+        "end_frame": 1563,
+        "grip": "thumb+middle",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:22.544912",
+      "event_type": "cube_removed",
+      "data": {
+        "round": 2,
+        "color": "blue",
+        "frame": 1565
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:25.952619",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 1595,
+        "end_frame": 1604,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:26.379905",
+      "event_type": "cube_removed",
+      "data": {
+        "round": 2,
+        "color": "yellow",
+        "frame": 1609
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:26.379905",
+      "event_type": "round_completed",
+      "data": {
+        "round": 2,
+        "frame": 1609,
+        "frames": 725
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:26.379905",
+      "event_type": "round_started",
+      "data": {
+        "round": 3,
+        "target": [
+          "yellow",
+          "red",
+          "blue",
+          "green"
+        ],
+        "frame": 1609
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:26.705319",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 1595,
+        "end_frame": 1613,
+        "grip": "thumb+middle",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:27.128639",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 1608,
+        "end_frame": 1618,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:31.423990",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 1661,
+        "end_frame": 1669,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:31.789612",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 1660,
+        "end_frame": 1673,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:34.190184",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 1681,
+        "end_frame": 1701,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:34.472906",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 1680,
+        "end_frame": 1704,
+        "grip": "thumb+middle",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:34.841819",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 1675,
+        "end_frame": 1708,
+        "grip": "thumb+middle",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:37.168358",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 1715,
+        "end_frame": 1736,
+        "grip": "thumb+middle",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:38.311236",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 1704,
+        "end_frame": 1750,
+        "grip": "thumb+middle",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:39.375517",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 1737,
+        "end_frame": 1764,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:39.445524",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 1760,
+        "end_frame": 1765,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:41.594704",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 1765,
+        "end_frame": 1790,
+        "grip": "thumb+index",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:42.995430",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 1791,
+        "end_frame": 1806,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:43.396866",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "green",
+        "start_frame": 1806,
+        "end_frame": 1811,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:45.712180",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "red",
+        "start_frame": 1808,
+        "end_frame": 1838,
+        "grip": "thumb+ring",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:45.825724",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "blue",
+        "start_frame": 1818,
+        "end_frame": 1839,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    },
+    {
+      "timestamp": "2026-10-02T10:12:45.918995",
+      "event_type": "cube_moved",
+      "data": {
+        "color": "yellow",
+        "start_frame": 1815,
+        "end_frame": 1840,
+        "grip": "no pinch",
+        "required": null,
+        "counted": true
+      }
+    }
+  ]
 }

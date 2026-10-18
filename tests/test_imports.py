@@ -17,7 +17,7 @@ def test_import_config():
 
 def test_import_detector():
     """Test that detector can be imported."""
-    from assessment_app import CubeDetector, Cube
+    from assessment_app import Cube, CubeDetector
 
     assert CubeDetector is not None
     assert Cube is not None
@@ -26,7 +26,7 @@ def test_import_detector():
 
 def test_import_game():
     """Test that game logic can be imported."""
-    from assessment_app import GameEngine, GameDifficulty
+    from assessment_app import GameDifficulty, GameEngine
 
     assert GameEngine is not None
     assert GameDifficulty is not None
@@ -38,6 +38,7 @@ def test_import_pipeline_contracts():
         Dataset,
         Frame,
         HSVCubeBackend,
+        MediaPipeHolisticBackend,
         ModelBackend,
         VideoDataset,
         VisionPipeline,
@@ -50,6 +51,7 @@ def test_import_pipeline_contracts():
             Dataset,
             Frame,
             HSVCubeBackend,
+            MediaPipeHolisticBackend,
             ModelBackend,
             VideoDataset,
             VisionPipeline,
